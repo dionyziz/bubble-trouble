@@ -1,0 +1,32 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+canvas {
+    display: block;
+    border: 1px solid red;
+    margin: auto;
+}
+
+#popup {
+    background: -webkit-linear-gradient(#4A7, #285);
+    border: 1px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 0 10px 0 rgba( 0, 0, 0, .4 );
+    color: white;
+    display: none;
+    height: 32px;
+    font: bold 24px/32px 'Constantia';
+    left: 50%;
+    margin-left: -160px;
+    padding: 16px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 1px 1px 1px black;
+    top: 234px;
+    width: 320px;
+}
+
