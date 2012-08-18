@@ -5,12 +5,12 @@ var PLAYER_SIZE_H = PLAYER_H / (H - GROUND_H),
 var GAME_SPEED = 1;
 
 var bubbles = [
-//   new Bubble(
-//       new Particle( new Vector( 0.5, 0.5 ), Vector.fromPolar( Math.PI / 3, 0.01 ) ), 3
-//   ),
-//   new Bubble(
-//       new Particle( new Vector( 0.25, 0.5 ), Vector.fromPolar( Math.PI / 6, 0.01 ) ), 1
-//   ),
+    new Bubble(
+        new Particle( new Vector( 0.5, 0.5 ), Vector.fromPolar( Math.PI / 3, 0.01 ) ), 3
+    ),
+    new Bubble(
+        new Particle( new Vector( 0.25, 0.5 ), Vector.fromPolar( Math.PI / 6, 0.01 ) ), 1
+    ),
     new Bubble(
         new Particle( new Vector( 0.5, 0.25 ), Vector.fromPolar( -Math.PI / 6, 0.01 ) ), 2
     )
@@ -22,17 +22,11 @@ var x = 0.5,
     rope_enabled = false;
 
 function gameOver() {
-    var popup = document.getElementById("popup");
-    popup.innerHTML = 'Game over!';
-    popup.style.display = 'block';
-    window.clearInterval(wi);
+    message( 'Game over!' );
 }
 
 function victory() {
-    var popup = document.getElementById("popup");
-    popup.innerHTML = 'Victory!';
-    popup.style.display = 'block';
-    window.clearInterval(wi);
+    message( 'Victory!' );
 }
 
 function tick( dt ) {
@@ -102,7 +96,9 @@ function integrateBubbles( dt ) {
             ended = false;
         }
     }
-    if (ended) victory();
+    if ( ended ) {
+        victory();
+    }
 }
 
 document.body.onkeydown = function( e ) {

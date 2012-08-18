@@ -1,23 +1,43 @@
-var GROUND_H = 100,
-    PLAYER_W = 20, PLAYER_H = 50;
+var GROUND_H = 10,
+    PLAYER_W = 30, PLAYER_H = 44;
 var canvas = document.getElementById( "canvas" );
 var ctx = canvas.getContext( '2d' );
-var W = 600, H = 600;
+var W = 640 - PLAYER_W, H = 480;
+
+var george = new Sprite( 'images/george_0.png', new Vector( 44, 44 ) );
+var background = new Image();
+background.src = 'images/fantasy_border.png';
 
 canvas.width = W + PLAYER_W;
+canvas.height = H;
+
 ctx.translate( PLAYER_W / 2, 0 );
+//
+// TODO; use an observer pattern to remove the direct calls from bubble-trouble.js
+//       and make it renderer-agnostic
+function message( text ) {
+    var popup = document.getElementById( 'popup' );
+    popup.style.top = ( H - GROUND_H ) / 2;
+    popup.innerHTML = text;
+    popup.style.display = 'block';
+    clearInterval( wi );
+}
+
 
 function drawPlayer() {
     ctx.fillStyle = 'blue';
-    rect( new Vector( x * W - PLAYER_W / 2, H - GROUND_H - PLAYER_H ),
-          new Vector( PLAYER_W, PLAYER_H ) );
+    george.draw(
+        ctx,
+        new Vector( x * W - PLAYER_W / 2, H - GROUND_H - PLAYER_H ),
+        new Vector( 0, 0 )
+    );
 }
 
 function drawRope() {
     if ( !rope_enabled ) {
         return;
     }
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = 'white';
     ctx.beginPath();
     ctx.moveTo( rope.x * W, H - GROUND_H );
     ctx.lineTo( rope.x * W, H - GROUND_H - rope.y * ( H - GROUND_H ) );
@@ -27,6 +47,7 @@ function drawRope() {
 function clearCanvas() {
     ctx.fillStyle = 'white';
     ctx.clearRect( -PLAYER_W / 2, 0, W + PLAYER_W, H );
+    ctx.drawImage( background, -PLAYER_W / 2, 0 );
 }
 
 function render() {
@@ -42,13 +63,13 @@ function rect( start, size ) {
 }
 
 function drawGround() {
-    ctx.fillStyle = 'red';
+    ctx.fillStyle = '#666';
     rect( new Vector( -PLAYER_W / 2, H - GROUND_H ), new Vector( W + PLAYER_W, GROUND_H ) );
 }
 
 function drawBubble( bubble ) {
     ctx.beginPath();
-    ctx.fillStyle = 'green';
+    ctx.fillStyle = 'white';
     ctx.arc( bubble.particle.location.x * W, bubble.particle.location.y * ( H - GROUND_H ),
              bubble.size * W * 0.01, 0, 2 * Math.PI );
     ctx.fill();
