@@ -98,7 +98,7 @@ function integrateRope( dt ) {
 function integrateBubbles( dt ) {
     var ended = true;
     for ( var i = 0; i < bubbles.length; ++i ) {
-        if (bubbles[ i ].size > 0) {
+        if ( bubbles[ i ].size > 0 ) {
             bubbles[ i ].integrate( dt );
             ended = false;
         }
