@@ -8,6 +8,7 @@ Bubble.prototype = {
     constructor: 'Bubble',
     integrate: function( dt ) {
         this.particle.integrate( dt );
+        // conservation of energy during collision
         if ( this.particle.location.y < this.radius ) {
              this.particle.location.y = this.radius;
              this.particle.velocity.y = -this.particle.velocity.y;

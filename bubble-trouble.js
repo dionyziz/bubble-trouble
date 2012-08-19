@@ -6,13 +6,13 @@ var GAME_SPEED = 1;
 
 var bubbles = [
     new Bubble(
-        new Particle( new Vector( 0.5, 0.5 ), Vector.fromPolar( Math.PI / 3, 0.01 ) ), 3
+        new Particle( new Vector( 0.75, 0.5 ), Vector.fromPolar( 0, 0.005 ) ), 3
     ),
     new Bubble(
-        new Particle( new Vector( 0.25, 0.5 ), Vector.fromPolar( Math.PI / 6, 0.01 ) ), 1
+        new Particle( new Vector( 0.75, 0.5 ), Vector.fromPolar( -Math.PI, 0.005 ) ), 1
     ),
     new Bubble(
-        new Particle( new Vector( 0.5, 0.25 ), Vector.fromPolar( -Math.PI / 6, 0.01 ) ), 2
+        new Particle( new Vector( 0.75, 0.25 ), Vector.fromPolar( -Math.PI, 0.005 ) ), 2
     )
 ];
 
@@ -49,6 +49,8 @@ function integratePlayer( dt ) {
 }
 
 function integrateRope( dt ) {
+    var bubble_hit = false;
+
     if ( rope_enabled ) {
         rope.y += ROPE_SPEED * dt;
         var l = bubbles.length;
@@ -56,6 +58,7 @@ function integrateRope( dt ) {
             if ( bubbles[ i ].particle.location.y > 1 - ( rope.y - bubbles[ i ].radius )
               && bubbles[ i ].particle.location.x > rope.x - bubbles[ i ].radius
               && bubbles[ i ].particle.location.x < rope.x + bubbles[ i ].radius
+              && bubbles[ i ].size > 0
             ) {
                 // a bubble was hit by the rope
                 if ( bubbles[ i ].size > 1 ) {
@@ -70,7 +73,7 @@ function integrateRope( dt ) {
                                     ),
                                     new Vector(
                                         j * Math.abs( bubbles[ i ].particle.velocity.x ),
-                                        bubbles[ i ].particle.velocity.y
+                                        -Math.abs( bubbles[ i ].particle.velocity.y )
                                     )
                                 ),
                                 bubbles[ i ].size - 1
@@ -80,11 +83,15 @@ function integrateRope( dt ) {
                 }
                 // remove old big bubble which was hit
                 bubbles[ i ].size = 0;
+                bubble_hit = true;
             }
         }
-        if ( rope.y > 2 ) {
+        if ( rope.y > 1 ) {
             rope_enabled = false;
         }
+    }
+    if ( bubble_hit ) {
+        rope_enabled = false;
     }
 }
 
