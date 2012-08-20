@@ -40,7 +40,9 @@ function drawRope() {
     ctx.strokeStyle = 'white';
     ctx.beginPath();
     ctx.moveTo( rope.x * W, H - GROUND_H );
-    ctx.lineTo( rope.x * W, H - GROUND_H - rope.y * ( H - GROUND_H ) );
+    for ( var t = 0; t < rope.y; t += 0.005 ) {
+        ctx.lineTo( rope.x * W + 3 * Math.sin( 150 * t ), H - GROUND_H - t * ( H - GROUND_H ) );
+    }
     ctx.stroke();
 }
 
